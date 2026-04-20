@@ -9,8 +9,9 @@
   - **`USER.md`** — who the human is (address, preferences).
   - **`TOOLS.md`** — optional notes; does not enable/disable tools.
 - In `openclaw.json`, `agents.defaults.workspace` is `/data/.openclaw/workspace` (inside the container); `deploy.sh` mirrors local `./workspace/` to that path on the VPS (**excluding `memory/`** so deploy never overwrites remote daily memory).
-- **Deployment**: `./deploy.sh` — or **`./deploy.sh --pull-first`** to run `./pull.sh` first (snapshot VPS → local, including `memory/`), then deploy. Use pull-first when the VPS has the truth or you want a local backup of memories before pushing soul/skills.
-- **`workspace/memory/`** is gitignored (private); pull still downloads it from the VPS for local backup.
+- **Deployment**: `./deploy.sh` pushes local → VPS (workspace push **excludes `memory/`** so remote daily memory is never overwritten).
+- **Pull vs deploy**: Run **`./pull.sh`** and **`./deploy.sh`** as **separate steps**. Pull when you need the VPS copy locally (e.g. backup `memory/`). Edit, then deploy. Doing pull immediately before deploy mostly **round-trips the same files** and **overwrites uncommitted local edits** before upload — so it is not a useful default.
+- **`workspace/memory/`** is gitignored (private); only `pull.sh` brings memories down from the VPS.
 
 ## Remote Environment
 - **VPS IP**: 187.127.153.221
@@ -21,7 +22,7 @@
 - **Repo**: This folder is the canonical OpenClaw config + skills; push to GitHub.
 - **Secrets**: `.openclaw/openclaw.json` is **gitignored**. Commit `openclaw.json.example` only. Keep your real config locally (copy from the example on a new machine).
 - **Pull from server**: `./pull.sh` rsyncs remote `skills/`, `openclaw.json`, and `workspace/` into this repo (use when the VPS was edited outside this repo).
-- **Push to server**: `./deploy.sh` (or `./deploy.sh --pull-first` to pull VPS state first). Deploy does not sync `workspace/memory/` **to** the VPS — only pull brings memories down.
+- **Push to server**: `./deploy.sh`. Deploy does not sync `workspace/memory/` **to** the VPS — only pull brings memories down.
 
 ## Skill Creation Rules
 1. **Format**: Each skill is a subfolder of `./.openclaw/skills/` containing **`SKILL.md`** (OpenClaw / AgentSkills).

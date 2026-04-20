@@ -24,7 +24,7 @@ alwaysApply: true
 - Edit skills and **non-secret** config in Cursor here; commit and push to GitHub.
 - **Do not commit** `.openclaw/openclaw.json`. Update `openclaw.json.example` when you add structural config others should copy.
 - **`./pull.sh`**: rsync **from** the VPS into local `.openclaw/` (when the server has newer edits).
-- **`./deploy.sh`**: rsync **to** the VPS + restart. Workspace push **excludes `memory/`** so remote daily memory is never overwritten. Use **`./deploy.sh --pull-first`** to run **`./pull.sh`** first (VPS → local, including memories), then deploy.
+- **`./pull.sh`** then edit then **`./deploy.sh`**: pull when you need VPS state locally (including `memory/`). Deploy pushes your edits; workspace push **excludes `memory/`** so remote memories stay put. Do not pull immediately before deploy unless you intend to discard local changes and match the server first — that sequence mostly round-trips the same bytes.
 
 ## Remote reference
 

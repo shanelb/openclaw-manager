@@ -1,22 +1,19 @@
 #!/bin/bash
 
-# Usage:
-#   ./deploy.sh              # push local skills, config, workspace → VPS (memory/ on VPS never touched)
-#   ./deploy.sh --pull-first # pull from VPS first, then deploy (use when VPS is ahead or to snapshot memories locally)
+# Push local → VPS and restart. Does not upload workspace/memory/ (remote memories stay safe).
+#
+# Workflow (do not chain pull+deploy blindly):
+#   1. ./pull.sh   — only when you want VPS → local (backup memory/, reconcile with server).
+#   2. Edit locally, commit if you like.
+#   3. ./deploy.sh — push your edits.
+# Pulling right before deploy just round-trips the same files and overwrites any uncommitted
+# local changes, so run pull and deploy as separate intentional steps.
 
 # Configuration
 RPC_USER="root"
 RPC_HOST="187.127.153.221"
 REMOTE_BASE="/docker/openclaw-zfb6/data/.openclaw"
 CONTAINER_NAME="openclaw-zfb6-openclaw-1"
-
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-if [[ "${1:-}" == "--pull-first" ]]; then
-  echo "⬇️ Pull-first: syncing VPS → local (including memory/ backup), then deploying..."
-  "$SCRIPT_DIR/pull.sh"
-  echo ""
-fi
 
 echo "🚀 Deploying updates from Cursor..."
 
