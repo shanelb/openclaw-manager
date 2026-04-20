@@ -9,6 +9,11 @@
 # Agent daily memory pulled from VPS (private; do not commit)
 workspace/memory/
 
+# VPS workspace may include its own git + local state (not part of this repo)
+workspace/.git/
+workspace/.openclaw/
+workspace/state/
+
 # OS / editor
 .DS_Store
 *.swp

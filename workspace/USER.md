@@ -1,12 +1,22 @@
-# USER.md — Who You're Helping
+---
+summary: "User profile record"
+read_when:
+  - Bootstrapping a workspace manually
+---
 
-Describe the human you assist (how to address them, timezone, preferences). Keep it factual and useful — not a diary.
+# USER.md - About Your Human
 
-- **Name / how to address:**
-- **Timezone:**
-- **Goals:** (what they're using OpenClaw for)
-- **Preferences:** (brevity, languages, things to avoid)
+_Learn about the person you're helping. Update this as you go._
+
+- **Name:** Shan
+- **What to call them:** Shan
+- **Timezone:** Asia/Calcutta (India)
+- **Notes:** Using OpenClaw for experimental task automation.
+
+## Context
+
+_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_
 
 ---
 
-Update when the user tells you something stable about themselves.
+The more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.
