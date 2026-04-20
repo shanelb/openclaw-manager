@@ -1,10 +1,15 @@
 # Openclaw Manager Context
 
 ## Project Architecture
-- **Local Workspace**: Root directory contains `.openclaw/` folder.
-- **Config Location**: `./.openclaw/openclaw.json`
-- **Skills Location**: `./.openclaw/skills/` (Markdown files with YAML frontmatter).
-- **Deployment**: Local changes are synced to a Hostinger VPS via `deploy.sh`.
+- **Gateway config + skills**: `./.openclaw/` — `openclaw.json`, `skills/<id>/SKILL.md`.
+- **Agent “soul” & identity** (persona, tone, name, emoji): **`./workspace/`** — OpenClaw loads these every session. See [Agent workspace](https://docs.openclaw.ai/concepts/agent-workspace) and [SOUL.md guide](https://docs.openclaw.ai/concepts/soul).
+  - **`SOUL.md`** — voice, boundaries, vibe (who the model *is*).
+  - **`IDENTITY.md`** — name, emoji, creature, avatar (how it *presents*).
+  - **`AGENTS.md`** — operating rules, priorities, tool habits.
+  - **`USER.md`** — who the human is (address, preferences).
+  - **`TOOLS.md`** — optional notes; does not enable/disable tools.
+- In `openclaw.json`, `agents.defaults.workspace` is `/data/.openclaw/workspace` (inside the container); `deploy.sh` mirrors local `./workspace/` to that path on the VPS.
+- **Deployment**: `./deploy.sh` rsyncs skills, config, and **workspace** to the Hostinger VPS, then restarts the container.
 
 ## Remote Environment
 - **VPS IP**: 187.127.153.221
@@ -14,7 +19,7 @@
 ## Git / GitHub (source of truth)
 - **Repo**: This folder is the canonical OpenClaw config + skills; push to GitHub.
 - **Secrets**: `.openclaw/openclaw.json` is **gitignored**. Commit `openclaw.json.example` only. Keep your real config locally (copy from the example on a new machine).
-- **Pull from server**: `./pull.sh` rsyncs remote `skills/` + `openclaw.json` into `.openclaw/` (use when the VPS was edited outside this repo).
+- **Pull from server**: `./pull.sh` rsyncs remote `skills/`, `openclaw.json`, and `workspace/` into this repo (use when the VPS was edited outside this repo).
 - **Push to server**: `./deploy.sh` after committing what you want live.
 
 ## Skill Creation Rules

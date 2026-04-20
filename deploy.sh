@@ -14,6 +14,10 @@ rsync -avz --delete ./.openclaw/skills/ $RPC_USER@$RPC_HOST:$REMOTE_BASE/skills/
 # 2. Sync Config
 rsync -avz ./.openclaw/openclaw.json $RPC_USER@$RPC_HOST:$REMOTE_BASE/openclaw.json
 
+# 3. Sync agent workspace (SOUL.md, IDENTITY.md, AGENTS.md, USER.md, …)
+#    No --delete: remote may have extra files (e.g. memory/) not in this repo.
+rsync -avz ./workspace/ $RPC_USER@$RPC_HOST:$REMOTE_BASE/workspace/
+
 echo "♻️ Restarting Openclaw Container..."
 if ssh $RPC_USER@$RPC_HOST "docker restart $CONTAINER_NAME"; then
     echo "✅ Success! Container restarted and project is live."

@@ -16,6 +16,7 @@ alwaysApply: true
 
 - Config: `.openclaw/openclaw.json` (secrets; **gitignored** — template is `openclaw.json.example` at repo root)
 - Skills: `.openclaw/skills/<skill-id>/SKILL.md`
+- **Agent workspace (soul / identity / persona):** `workspace/` — `SOUL.md`, `IDENTITY.md`, `AGENTS.md`, `USER.md`, `TOOLS.md` (see [Agent workspace](https://docs.openclaw.ai/concepts/agent-workspace)). Synced to the server by `deploy.sh`; **not** the same as skills under `.openclaw/skills/`.
 - Human-maintained cheat sheet: `.cursorbrain` (IPs, remote paths, reminders)
 
 ## GitHub as source of truth
