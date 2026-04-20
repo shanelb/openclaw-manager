@@ -1,0 +1,151 @@
+{
+  "channels": {
+    "whatsapp": {
+      "dmPolicy": "allowlist",
+      "selfChatMode": true,
+      "allowFrom": ["+YOUR_E164_NUMBER"],
+      "groupAllowFrom": ["+YOUR_E164_NUMBER"],
+      "groupPolicy": "allowlist",
+      "debounceMs": 0,
+      "mediaMaxMb": 50,
+      "dms": {
+        "custom-1": {}
+      },
+      "enabled": true
+    }
+  },
+  "update": {
+    "channel": "stable",
+    "checkOnStart": false
+  },
+  "browser": {
+    "headless": true,
+    "noSandbox": true,
+    "defaultProfile": "openclaw"
+  },
+  "commands": {
+    "bash": true,
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true
+  },
+  "tools": {
+    "profile": "full",
+    "elevated": {
+      "enabled": true,
+      "allowFrom": {
+        "webchat": ["*"]
+      }
+    },
+    "web": {
+      "search": {
+        "provider": "ollama",
+        "enabled": true
+      }
+    }
+  },
+  "agents": {
+    "list": [
+      {
+        "id": "main",
+        "name": "main",
+        "model": "openrouter/auto"
+      }
+    ],
+    "defaults": {
+      "workspace": "/data/.openclaw/workspace",
+      "model": {
+        "primary": "openrouter/auto"
+      },
+      "models": {
+        "google/gemini-3.1-pro-preview": {
+          "alias": "Gemini 3.1 Pro Preview"
+        },
+        "google/gemini-3-flash-preview": {
+          "alias": "Gemini 3 Flash Preview"
+        },
+        "google/gemini-2.5-flash": {
+          "alias": "Gemini 2.5 Flash"
+        },
+        "google/gemini-2.5-pro": {
+          "alias": "Gemini 2.5 Pro"
+        },
+        "openrouter/auto": {
+          "alias": "OpenRouter"
+        }
+      },
+      "thinkingDefault": "low"
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "controlUi": {
+      "allowedOrigins": [
+        "http://localhost:18789",
+        "http://127.0.0.1:18789"
+      ]
+    },
+    "auth": {
+      "mode": "token",
+      "token": "REPLACE_WITH_GATEWAY_TOKEN",
+      "rateLimit": {
+        "maxAttempts": 10,
+        "windowMs": 60000,
+        "lockoutMs": 300000
+      }
+    },
+    "remote": {
+      "token": "REPLACE_WITH_GATEWAY_TOKEN"
+    },
+    "port": 18789,
+    "bind": "loopback",
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    }
+  },
+  "plugins": {
+    "entries": {
+      "browser": { "enabled": true },
+      "whatsapp": { "enabled": true },
+      "google": { "enabled": true },
+      "ollama": { "enabled": true },
+      "openrouter": { "enabled": true }
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/data/.openclaw/skills"]
+    },
+    "entries": {
+      "hhmail": { "enabled": true }
+    }
+  },
+  "models": {
+    "mode": "merge"
+  },
+  "hooks": {
+    "token": "REPLACE_WITH_HOOKS_TOKEN"
+  },
+  "meta": {
+    "lastTouchedAt": "2026-01-01T00:00:00.000Z",
+    "lastTouchedVersion": "2026.4.12"
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "auth": {
+    "profiles": {
+      "openrouter:default": {
+        "provider": "openrouter",
+        "mode": "api_key"
+      }
+    }
+  },
+  "wizard": {
+    "lastRunAt": "2026-01-01T00:00:00.000Z",
+    "lastRunVersion": "2026.4.12",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local"
+  }
+}

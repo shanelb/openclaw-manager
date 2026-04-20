@@ -1,0 +1,46 @@
+---
+description: OpenClaw gateway context, deploy workflow, remote Docker, and config sync
+alwaysApply: true
+---
+
+# OpenClaw Manager (this workspace)
+
+## Stack
+
+- **Gateway**: Node.js–based AI gateway (OpenClaw).
+- **Skill engine**: Markdown skills under `.openclaw/skills/`; the agent calls **tools** defined in skill code blocks.
+- **Runtime**: Remote Ubuntu; OpenClaw runs in Docker (`openclaw-zfb6-openclaw-1`).
+- **Sync**: `deploy.sh` uses **rsync** to mirror `.openclaw/` content to the VPS. Edits to `openclaw.json` take effect on the server **after** deploy **and** container restart (restart is included in the script).
+
+## Local paths
+
+- Config: `.openclaw/openclaw.json` (secrets; **gitignored** — template is `openclaw.json.example` at repo root)
+- Skills: `.openclaw/skills/<skill-id>/SKILL.md`
+- Human-maintained cheat sheet: `.cursorbrain` (IPs, remote paths, reminders)
+
+## GitHub as source of truth
+
+- Edit skills and **non-secret** config in Cursor here; commit and push to GitHub.
+- **Do not commit** `.openclaw/openclaw.json`. Update `openclaw.json.example` when you add structural config others should copy.
+- **`./pull.sh`**: rsync **from** the VPS into local `.openclaw/` (when the server has newer edits).
+- **`./deploy.sh`**: rsync **to** the VPS + restart container (after you are ready to go live).
+
+## Remote reference
+
+- **Host**: `187.127.153.221` (user: `root`)
+- **Remote data path**: `/docker/openclaw-zfb6/data/.openclaw/`
+- **Container**: `openclaw-zfb6-openclaw-1`
+
+## Deploy
+
+- When the user asks to **Deploy**, remind them to run `./deploy.sh` from the project root (syncs skills + config, then restarts the container).
+
+## Troubleshooting
+
+```bash
+ssh root@187.127.153.221 "docker logs --tail 50 openclaw-zfb6-openclaw-1"
+```
+
+## New dependencies in skills
+
+Confirm any new NPM package exists in the OpenClaw **container** image before relying on it in skill code.

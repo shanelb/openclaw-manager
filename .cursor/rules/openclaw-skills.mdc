@@ -1,0 +1,33 @@
+---
+description: Format and conventions for OpenClaw Markdown skills
+globs: .openclaw/skills/**/*.md
+alwaysApply: false
+---
+
+# OpenClaw skills
+
+## File format (OpenClaw / AgentSkills)
+
+- Each skill is a **folder** under `.openclaw/skills/` containing a file named **`SKILL.md`** (not `my-skill.md` at the skills root). See [OpenClaw Skills](https://docs.openclaw.ai/tools/skills.md).
+- `SKILL.md` **must** begin with YAML frontmatter: the opening `---` is the **first line** (no title or prose before it).
+- The `name` in frontmatter should match `skills.entries` in `openclaw.json` (e.g. `name: hhmail` ↔ `"hhmail": { "enabled": true }`).
+- OpenClaw’s parser expects **single-line** frontmatter values; put `metadata` as a **one-line** JSON object when needed (e.g. `metadata: { "openclaw": { "emoji": "✉️" } }`).
+- Frontmatter shape:
+
+```yaml
+---
+name: [Skill Name]
+description: [Brief purpose]
+icon: [Emoji]
+---
+```
+
+## Logic
+
+- Put JavaScript/TypeScript inside fenced code blocks.
+- Use Openclaw’s `sdk` for tool definitions and calls.
+- Register or enable skills in `.openclaw/openclaw.json` under `skills` when needed; **deploy** so the remote gateway picks up changes.
+
+## Dependencies
+
+If a skill needs a new NPM package, verify it is available in the Openclaw Docker environment before using it.

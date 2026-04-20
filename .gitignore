@@ -1,0 +1,12 @@
+# Local-only secrets (never commit — use openclaw.json.example as a template)
+.openclaw/openclaw.json
+
+# Env and local overrides
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+*.swp
+*~
