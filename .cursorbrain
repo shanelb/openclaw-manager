@@ -8,8 +8,9 @@
   - **`AGENTS.md`** — operating rules, priorities, tool habits.
   - **`USER.md`** — who the human is (address, preferences).
   - **`TOOLS.md`** — optional notes; does not enable/disable tools.
-- In `openclaw.json`, `agents.defaults.workspace` is `/data/.openclaw/workspace` (inside the container); `deploy.sh` mirrors local `./workspace/` to that path on the VPS.
-- **Deployment**: `./deploy.sh` rsyncs skills, config, and **workspace** to the Hostinger VPS, then restarts the container.
+- In `openclaw.json`, `agents.defaults.workspace` is `/data/.openclaw/workspace` (inside the container); `deploy.sh` mirrors local `./workspace/` to that path on the VPS (**excluding `memory/`** so deploy never overwrites remote daily memory).
+- **Deployment**: `./deploy.sh` — or **`./deploy.sh --pull-first`** to run `./pull.sh` first (snapshot VPS → local, including `memory/`), then deploy. Use pull-first when the VPS has the truth or you want a local backup of memories before pushing soul/skills.
+- **`workspace/memory/`** is gitignored (private); pull still downloads it from the VPS for local backup.
 
 ## Remote Environment
 - **VPS IP**: 187.127.153.221
@@ -20,7 +21,7 @@
 - **Repo**: This folder is the canonical OpenClaw config + skills; push to GitHub.
 - **Secrets**: `.openclaw/openclaw.json` is **gitignored**. Commit `openclaw.json.example` only. Keep your real config locally (copy from the example on a new machine).
 - **Pull from server**: `./pull.sh` rsyncs remote `skills/`, `openclaw.json`, and `workspace/` into this repo (use when the VPS was edited outside this repo).
-- **Push to server**: `./deploy.sh` after committing what you want live.
+- **Push to server**: `./deploy.sh` (or `./deploy.sh --pull-first` to pull VPS state first). Deploy does not sync `workspace/memory/` **to** the VPS — only pull brings memories down.
 
 ## Skill Creation Rules
 1. **Format**: Each skill is a subfolder of `./.openclaw/skills/` containing **`SKILL.md`** (OpenClaw / AgentSkills).

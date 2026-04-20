@@ -6,6 +6,9 @@
 .env.*
 !.env.example
 
+# Agent daily memory pulled from VPS (private; do not commit)
+workspace/memory/
+
 # OS / editor
 .DS_Store
 *.swp
